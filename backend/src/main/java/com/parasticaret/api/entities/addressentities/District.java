@@ -1,41 +1,23 @@
 package com.parasticaret.api.entities.addressentities;
 
+import jakarta.persistence.*;
+
+import java.util.Set;
+
+@Entity
 public class District {
 
-    private int id;
-    private int cityId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="city_id")
+    private City city;
     private String name;
 
-    public District(int id, int cityId, String name) {
-        this.id = id;
-        this.cityId = cityId;
-        this.name = name;
-    }
+    @OneToMany(mappedBy = "district", fetch = FetchType.LAZY)
+    private Set<Neighborhood> neighborhoods;
 
-    public District() {
-    }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(int cityId) {
-        this.cityId = cityId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
